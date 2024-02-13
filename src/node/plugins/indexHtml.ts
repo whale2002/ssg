@@ -1,10 +1,10 @@
 import { readFile } from 'fs/promises'
-import { Plugin } from 'vite'
+import type { Plugin } from 'vite'
 import { CLIENT_ENTRY_PATH, DEFAULT_HTML_PATH } from '../constants'
 
 export function pluginIndexHtml(): Plugin {
   return {
-    name: 'ssg:index-html',
+    name: 'island:index-html',
     apply: 'serve',
     transformIndexHtml(html) {
       return {
@@ -24,6 +24,7 @@ export function pluginIndexHtml(): Plugin {
     configureServer(server) {
       return () => {
         server.middlewares.use(async (req, res, next) => {
+          // 读取默认的 index.html 文件
           let html = await readFile(DEFAULT_HTML_PATH, 'utf-8')
 
           try {
@@ -32,6 +33,7 @@ export function pluginIndexHtml(): Plugin {
               html,
               req.originalUrl
             )
+            // 响应
             res.statusCode = 200
             res.setHeader('Content-Type', 'text/html')
             res.end(html)

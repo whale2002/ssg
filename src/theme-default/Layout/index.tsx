@@ -1,6 +1,7 @@
 import { useState } from "react";
+import React from 'react'
 
-export function Layout() {
+export function Layout(): React.FC {
   const [count, setCount] = useState(0);
   return (
     <div>
