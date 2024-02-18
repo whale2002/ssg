@@ -3,7 +3,8 @@ import type { RollupOutput } from 'rollup'
 import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH } from './constants'
 import pluginReact from '@vitejs/plugin-react'
 import { join } from 'path'
-import * as fs from 'fs-extra'
+import fs from 'fs-extra'
+import { pathToFileURL } from 'url'
 
 export async function bundle(root: string) {
   const resolveViteConfig = (isServer: boolean): InlineConfig => ({
@@ -39,10 +40,10 @@ export async function bundle(root: string) {
 }
 
 export async function build(root: string = process.cwd()) {
-  const [clientBundle, serverBundle] = await bundle(root)
+  const [clientBundle] = await bundle(root)
 
   const serverEntryPath = join(root, '.temp', 'ssr-entry.js')
-  const { render } = require(serverEntryPath)
+  const { render } = await import(pathToFileURL(serverEntryPath).toString())
   await renderPage(render, root, clientBundle)
 }
 
