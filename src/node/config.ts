@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 import fs from 'fs-extra'
 import { loadConfigFromFile } from 'vite'
-import { UserConfig } from '../shared/types'
+import { UserConfig, SiteConfig } from 'shared/types'
 
 type RowConfig =
   | UserConfig
@@ -22,7 +22,7 @@ function getConfigPath(root: string) {
   }
 }
 
-export async function resolveConfig(
+async function resolveUserConfig(
   root: string,
   command: 'serve' | 'build',
   mode: 'development' | 'production'
@@ -34,10 +34,38 @@ export async function resolveConfig(
   if (result) {
     const { config: rawConfig = {} as RowConfig } = result
 
-    const userConfig = await (typeof rawConfig === 'function'
+    const userConfig = (await (typeof rawConfig === 'function'
       ? rawConfig()
-      : rawConfig)
+      : rawConfig)) as UserConfig
 
     return [configPath, userConfig] as const
   }
+}
+
+function resolveSiteConfig(userConfig: UserConfig) {
+  return {
+    title: userConfig.title || 'Island.js',
+    description: userConfig.description || 'SSG Framework',
+    themeConfig: userConfig.themeConfig || {},
+    vite: userConfig.vite || {}
+  }
+}
+
+export async function resolveConfig(
+  root: string,
+  command: 'serve' | 'build',
+  mode: 'development' | 'production'
+) {
+  const [configPath, userConfig] = await resolveUserConfig(root, command, mode)
+  const siteConfig: SiteConfig = {
+    root,
+    configPath,
+    siteData: resolveSiteConfig(userConfig)
+  }
+
+  return siteConfig
+}
+
+export function defineConfig(config: UserConfig) {
+  return config
 }

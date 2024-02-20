@@ -1,6 +1,5 @@
 import { cac } from 'cac'
 import { resolve } from 'path'
-import { createDevServer } from './dev'
 import { build } from './build'
 const version = require('../../package.json').version
 
@@ -11,9 +10,18 @@ cli
   .alias('dev')
   .action(async (root: string) => {
     root = root ? resolve(root) : process.cwd()
-    const server = await createDevServer(root)
-    await server.listen()
-    server.printUrls()
+
+    const createServer = async () => {
+      const { createDevServer } = await import('./dev.js')
+      const server = await createDevServer(root, async () => {
+        await server.close()
+        await createServer()
+      })
+      await server.listen()
+      server.printUrls()
+    }
+
+    await createServer()
   })
 
 cli

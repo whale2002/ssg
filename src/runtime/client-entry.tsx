@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import siteData from 'island:site-data';
 import { App } from "./App";
 
 function renderInBrowser() {
@@ -10,3 +11,4 @@ function renderInBrowser() {
 }
 
 renderInBrowser();
+console.log(siteData);
