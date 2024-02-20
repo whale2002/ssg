@@ -2,12 +2,14 @@ import type { Plugin } from 'vite'
 import { normalizePath } from 'vite'
 import { relative } from 'path'
 import { SiteConfig } from 'shared/types/index'
+import { PACKAGE_ROOT } from 'node/constants'
+import { join } from 'path'
 
 const SITE_DATA_ID = 'island:site-data'
 
 export function pluginConfig(
   config: SiteConfig,
-  restartDevServer: () => Promise<void>
+  restartDevServer?: () => Promise<void>
 ): Plugin {
   return {
     name: 'island:config',
@@ -32,6 +34,16 @@ export function pluginConfig(
         )
         // 重点: 重启 Dev Server
         await restartDevServer()
+      }
+    },
+    config() {
+      return {
+        root: PACKAGE_ROOT,
+        resolve: {
+          alias: {
+            '@runtime': join(PACKAGE_ROOT, 'src', 'runtime', 'index.ts')
+          }
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 import { cac } from 'cac'
 import { resolve } from 'path'
 import { build } from './build'
+import { resolveConfig } from './config'
 const version = require('../../package.json').version
 
 const cli = cac('island').version(version).help()
@@ -29,7 +30,8 @@ cli
   .action(async (root: string) => {
     try {
       root = root ? resolve(root) : process.cwd()
-      await build(root)
+      const config = await resolveConfig(root, 'build', 'production')
+      await build(root, config)
     } catch (e) {
       console.error(e)
     }

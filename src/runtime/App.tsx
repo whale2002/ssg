@@ -1,7 +1,6 @@
 import { Layout } from "../theme-default";
-import React from 'react'
 
-export function App(): React.FC {
+export function App() {
   return (
     <Layout />
   )
