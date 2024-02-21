@@ -1,11 +1,12 @@
-import { Content } from '../../runtime';
+import 'uno.css';
+import "../style/base.css";
+import "../style/vars.css";
+import { Nav } from '../components/Nav'
 
 export function Layout() {
   return (
     <div>
-      <h1>Common Content</h1>
-      <h1>Doc Content</h1>
-      <Content />
+      <Nav />
     </div>
   );
 }

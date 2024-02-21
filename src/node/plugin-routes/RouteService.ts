@@ -49,7 +49,6 @@ export class RouteService {
   generateRoutesCode(ssr: boolean = false) {
     return `
       import React from 'react';
-      import loadable from '@loadable/component';
       ${ssr ? '' : 'import loadable from "@loadable/component";'}
       ${this.#routeData
         .map((route, index) => {
@@ -61,7 +60,7 @@ export class RouteService {
       export const routes = [
       ${this.#routeData
         .map((route, index) => {
-          return `{ path: '${route.routePath}', element: React.createElement(Route${index}) }`
+          return `{ path: '${route.routePath}', element: React.createElement(Route${index}), preload: () => import('${route.absolutePath}') }`
         })
         .join(',\n')}
       ];

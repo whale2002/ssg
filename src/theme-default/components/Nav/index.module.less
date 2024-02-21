@@ -1,0 +1,33 @@
+.link:hover {
+  color: var(--island-c-brand);
+  transition: color 0.2s;
+}
+
+.link {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.socialLinkIcon {
+  display: flex;
+  fill: currentColor;
+  transition: color 0.2s;
+  color: var(--island-c-text-2);
+  &:hover {
+    color: var(--island-c-text-1);
+  }
+}
+
+.divideBottom {
+  border-bottom: 1px solid var(--island-c-divider-light);
+}
+
+.switch::before {
+  margin-right: 12px;
+  margin-left: 12px;
+  width: 1px;
+  height: 24px;
+  background-color: var(--island-c-divider-light);
+  content: ' ';
+}

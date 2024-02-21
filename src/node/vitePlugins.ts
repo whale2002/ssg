@@ -4,6 +4,8 @@ import pluginReact from '@vitejs/plugin-react'
 import { pluginConfig } from './plugin-island/pluginConfig'
 import { pluginRoutes } from './plugin-routes'
 import { pluginMdx } from './plugin-mdx'
+import pluginUnocss from 'unocss/vite'
+import unocssOptions from './unocssOptions'
 
 export async function createVitePlugins(
   config: SiteConfig,
@@ -20,6 +22,7 @@ export async function createVitePlugins(
       root: config.root,
       isSSR
     }),
-    await pluginMdx()
+    await pluginMdx(),
+    pluginUnocss(unocssOptions)
   ]
 }

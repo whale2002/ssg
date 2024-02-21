@@ -3,7 +3,10 @@ import { defineConfig } from '../dist'
 export default defineConfig({
   title: 'ssg site',
   themeConfig: {
-    a: 1234564433221112222
+    nav: [
+      { text: '主页', link: '/' },
+      { text: '指南', link: '/guide/' }
+    ]
   },
   vite: {}
 })
