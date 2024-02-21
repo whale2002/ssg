@@ -18,12 +18,12 @@ export function Nav() {
   const nav = siteData.themeConfig.nav || [];
 
   return (
-    <header fixed="~" pos="t-0 l-0" w="full">
+    <header fixed="~" pos="t-0 l-0" w="full" z='10'>
       <div
         flex="~"
         items="center"
         justify="between"
-        className={`${styles.divideBottom} px-8 h-14`}
+        className={`${styles.divideBottom} ${styles.nav} h-14`}
       >
         <div>
           <a

@@ -1,0 +1,35 @@
+.content {
+  padding: 48px 24px;
+  margin-left: calc(
+    var(--island-sidebar-width) + ((100vw - var(--island-layout-max-width)) / 2) +
+      48px
+  );
+  margin-right: calc(32px + (100vw - var(--island-layout-max-width)) / 2);
+  // 100 vw - sidebar 的宽度
+  max-width: calc(100vw - calc(
+    var(--island-sidebar-width) + ((100vw - var(--island-layout-max-width)) / 2)
+  ));
+}
+
+.docContent {
+  margin-right: 80px;
+  min-width: 768px;
+  // 正文部分最大宽度: 100vw - sidebar 的宽度 - aside 的宽度 - 右边的 padding 和 margin
+  max-width: calc(
+    100vw - calc(
+      var(--island-sidebar-width) + ((100vw - var(--island-layout-max-width)) / 2)
+    ) - var(--island-aside-width) -
+      (100vw - var(--island-layout-max-width)) / 2 - 80px
+  );
+}
+
+.asideContainer {
+  position: sticky;
+  top: 0;
+  margin-top: calc(var(--island-nav-height) * -1 - 32px);
+  padding-top: calc(var(--island-nav-height) + 32px);
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+}

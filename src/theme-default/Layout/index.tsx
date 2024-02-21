@@ -1,8 +1,10 @@
 import 'uno.css';
 import "../style/base.css";
 import "../style/vars.css";
+import "../style/doc.css";
 import { Nav } from '../components/Nav'
 import { HomeLayout } from './HomeLayout';
+import { DocLayout } from './DocLayout'
 import { usePageData } from '../../runtime';
 
 export function Layout() {
@@ -14,7 +16,7 @@ export function Layout() {
       case 'home':
         return <HomeLayout />
       case 'doc':
-        return <div>doc</div>
+        return <DocLayout />
       default:
         return <div>404</div>
     }
@@ -23,7 +25,12 @@ export function Layout() {
   return (
     <div>
       <Nav />
-      {getContent()}
+      <section
+        style={{
+          paddingTop: 'var(--island-nav-height)'
+        }}>
+        {getContent()}
+      </section>
     </div>
   );
 }

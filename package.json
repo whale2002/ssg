@@ -38,6 +38,7 @@
     "remark-rehype": "^11.1.0",
     "rollup": "^4.10.0",
     "shiki": "^1.1.6",
+    "sirv": "^2.0.4",
     "typescript": "^4.9.4",
     "unified": "^11.0.4",
     "unocss": "^0.58.5",

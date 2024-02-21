@@ -4,6 +4,8 @@ import { relative } from 'path'
 import { SiteConfig } from 'shared/types/index'
 import { PACKAGE_ROOT } from 'node/constants'
 import { join } from 'path'
+import sirv from 'sirv'
+import fs from 'fs-extra'
 
 const SITE_DATA_ID = 'island:site-data'
 
@@ -13,6 +15,12 @@ export function pluginConfig(
 ): Plugin {
   return {
     name: 'island:config',
+    configureServer(server) {
+      const publicDir = join(config.root, 'public')
+      if (fs.pathExistsSync(publicDir)) {
+        server.middlewares.use(sirv(publicDir))
+      }
+    },
     resolveId(id) {
       if (id === SITE_DATA_ID) {
         return '\0' + SITE_DATA_ID
@@ -38,12 +46,7 @@ export function pluginConfig(
     },
     config() {
       return {
-        root: PACKAGE_ROOT,
-        resolve: {
-          alias: {
-            '@runtime': join(PACKAGE_ROOT, 'src', 'runtime', 'index.ts')
-          }
-        }
+        root: PACKAGE_ROOT
       }
     }
   }
