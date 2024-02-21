@@ -17,7 +17,7 @@ export async function bundle(root: string, config: SiteConfig) {
     plugins: await createVitePlugins(config, undefined, true),
     ssr: {
       // 注意加上这个配置，防止 cjs 产物中 require ESM 的产物，因为 react-router-dom 的产物为 ESM 格式
-      noExternal: ['react-router-dom']
+      noExternal: ['react-router-dom', 'lodash-es']
     },
     build: {
       ssr: isServer,
@@ -62,7 +62,7 @@ export async function build(root: string = process.cwd(), config: SiteConfig) {
 }
 
 export async function renderPage(
-  render: (routePath: string) => string,
+  render: (routePath: string) => Promise<string>,
   routes: Route[],
   root: string,
   clientBundle: RollupOutput
@@ -75,7 +75,7 @@ export async function renderPage(
   return Promise.all(
     routes.map(async (route) => {
       const routePath = route.path
-      const appHTML = render(routePath)
+      const appHTML = await render(routePath)
 
       const html = `
         <!DOCTYPE html>

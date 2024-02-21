@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import siteData from 'island:site-data';
 import { BrowserRouter } from 'react-router-dom';
 import { App, initPageData } from "./App";
 import { DataContext } from './hooks'
@@ -21,4 +20,3 @@ async function renderInBrowser() {
 }
 
 renderInBrowser();
-console.log(siteData);
