@@ -1,19 +1,19 @@
 import { InlineConfig, build as viteBuild } from 'vite'
 import type { RollupOutput } from 'rollup'
 import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH } from './constants'
-import pluginReact from '@vitejs/plugin-react'
 import { join } from 'path'
 import fs from 'fs-extra'
 import { pathToFileURL } from 'url'
 import { SiteConfig } from 'shared/types'
-import { pluginConfig } from './plugin-island/pluginConfig'
+import { createVitePlugins } from './vitePlugins'
 
 export async function bundle(root: string, config: SiteConfig) {
-  const resolveViteConfig = (isServer: boolean): InlineConfig => ({
+  const resolveViteConfig = async (
+    isServer: boolean
+  ): Promise<InlineConfig> => ({
     mode: 'production',
     root,
-    // 注意加上这个插件，自动注入 import React from 'react'，避免 React is not defined 的错误
-    plugins: [pluginReact(), pluginConfig(config)],
+    plugins: await createVitePlugins(config),
     ssr: {
       // 注意加上这个配置，防止 cjs 产物中 require ESM 的产物，因为 react-router-dom 的产物为 ESM 格式
       noExternal: ['react-router-dom']
@@ -35,9 +35,9 @@ export async function bundle(root: string, config: SiteConfig) {
   try {
     const [clientBundle, serverBundle] = await Promise.all([
       // client build
-      viteBuild(resolveViteConfig(false)),
+      viteBuild(await resolveViteConfig(false)),
       // server build
-      viteBuild(resolveViteConfig(true))
+      viteBuild(await resolveViteConfig(true))
     ])
     return [clientBundle, serverBundle] as [RollupOutput, RollupOutput]
   } catch (e) {
