@@ -38,6 +38,9 @@ dependencies:
   less:
     specifier: ^4.2.0
     version: 4.2.0
+  lodash-es:
+    specifier: ^4.17.21
+    version: 4.17.21
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -106,6 +109,9 @@ devDependencies:
   '@types/hast':
     specifier: ^3.0.4
     version: 3.0.4
+  '@types/lodash':
+    specifier: ^4.14.202
+    version: 4.14.202
   '@types/mdast':
     specifier: ^4.0.3
     version: 4.0.3
@@ -1397,6 +1403,10 @@ packages:
       '@types/node': 18.11.18
     dev: true
 
+  /@types/lodash@4.14.202:
+    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+    dev: true
+
   /@types/mdast@3.0.15:
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
     dependencies:
@@ -2652,6 +2662,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
+    dev: false
+
+  /lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
   /lodash.sortby@4.7.0:
