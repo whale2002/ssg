@@ -3,8 +3,6 @@ import { visit } from 'unist-util-visit'
 import { Root } from 'mdast'
 import { parse } from 'acorn'
 import type { Plugin } from 'unified'
-import type { MdxjsEsm } from 'mdast-util-mdxjs-esm'
-
 interface TocItem {
   id: string
   text: string
@@ -21,10 +19,9 @@ const slugger = new Slugger()
 
 export const remarkPluginToc: Plugin<[], Root> = () => {
   return (tree) => {
+    const toc: TocItem[] = []
     visit(tree, 'heading', (node) => {
       if (!node.depth || !node.children) return
-
-      const toc: TocItem[] = []
       // h2 ~ h4
       if (node.depth > 1 && node.depth < 5) {
         const originText = (node.children as ChildNode[])
@@ -44,18 +41,18 @@ export const remarkPluginToc: Plugin<[], Root> = () => {
           text: originText,
           depth: node.depth
         })
+      }
+    })
 
-        const insertCode = `export const toc = ${JSON.stringify(toc, null, 2)};`
-        tree.children.push({
-          type: 'mdxjsEsm',
-          value: insertCode,
-          data: {
-            estree: parse(insertCode, {
-              ecmaVersion: 2020,
-              sourceType: 'module'
-            }) as unknown
-          }
-        } as any)
+    const insertCode = `export const toc = ${JSON.stringify(toc, null, 2)};`
+    tree.children.push({
+      type: 'mdxjsEsm',
+      value: insertCode,
+      data: {
+        estree: parse(insertCode, {
+          ecmaVersion: 2020,
+          sourceType: 'module'
+        }) as unknown
       }
     })
   }
