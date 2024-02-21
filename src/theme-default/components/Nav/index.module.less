@@ -19,10 +19,6 @@
   }
 }
 
-.divideBottom {
-  border-bottom: 1px solid var(--island-c-divider-light);
-}
-
 .switch::before {
   margin-right: 12px;
   margin-left: 12px;
@@ -33,12 +29,7 @@
 }
 
 .nav {
-  padding-left: max(
-    32px,
-    calc(32px + (100vw - var(--island-layout-max-width)) / 2)
-  );
-  padding-right: max(
-    32px,
-    calc(32px + (100vw - var(--island-layout-max-width)) / 2)
-  );
+  padding-left: calc(32px + (100vw - var(--island-layout-max-width)) / 2);
+  padding-right: calc(32px + (100vw - var(--island-layout-max-width)) / 2);
+  background-color: var(--island-c-bg);
 }

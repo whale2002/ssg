@@ -14,8 +14,10 @@ export function MenuItem(item: NavItemWithLink) {
 }
 
 export function Nav() {
-  const { siteData } = usePageData();
+  const { siteData, pageType } = usePageData();
   const nav = siteData.themeConfig.nav || [];
+  const hasSidebar =
+    siteData.themeConfig.sidebar !== undefined && pageType === 'doc';
 
   return (
     <header fixed="~" pos="t-0 l-0" w="full" z='10'>
@@ -23,7 +25,7 @@ export function Nav() {
         flex="~"
         items="center"
         justify="between"
-        className={`${styles.divideBottom} ${styles.nav} h-14`}
+        className={`${styles.nav} h-14 divider-bottom`}
       >
         <div>
           <a
@@ -46,8 +48,6 @@ export function Nav() {
           <div className={styles.switch} flex="~">
             <SwitchAppearance />
           </div>
-
-          {/* 下一节课介绍 */}
 
           {/* 相关链接 */}
           <div className={styles.socialLinkIcon} ml="2">
