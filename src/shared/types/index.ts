@@ -49,14 +49,6 @@ export interface Header {
   depth: number
 }
 
-export interface FrontMatter {
-  title?: string
-  description?: string
-  pageType?: string
-  sidebar?: boolean
-  outline?: boolean
-}
-
 export type PageType = 'home' | 'doc' | 'custom' | '404'
 
 export interface PageData {
@@ -71,4 +63,35 @@ export interface PageModule {
   default: ComponentType
   frontmatter?: FrontMatter
   [key: string]: unknown
+}
+
+export interface Feature {
+  icon: string
+  title: string
+  details: string
+}
+
+export interface Hero {
+  name: string
+  text: string
+  tagline: string
+  image?: {
+    src: string
+    alt: string
+  }
+  actions: {
+    text: string
+    link: string
+    theme: 'brand' | 'alt'
+  }[]
+}
+
+export interface FrontMatter {
+  title?: string
+  description?: string
+  pageType?: PageType
+  sidebar?: boolean
+  outline?: boolean
+  features?: Feature[]
+  hero?: Hero
 }
