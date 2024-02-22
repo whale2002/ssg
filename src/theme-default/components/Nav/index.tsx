@@ -3,7 +3,7 @@ import { NavItemWithLink } from "shared/types";
 import { usePageData } from "../../../runtime";
 import { SwitchAppearance } from "../SwitchAppearance";
 
-export function MenuItem(item: NavItemWithLink) {
+export function MenuItem({ item }: { item:NavItemWithLink }) {
   return (
     <div className="text-sm font-medium mx-3">
       <a href={item.link} className={styles.link}>
@@ -14,10 +14,8 @@ export function MenuItem(item: NavItemWithLink) {
 }
 
 export function Nav() {
-  const { siteData, pageType } = usePageData();
+  const { siteData } = usePageData();
   const nav = siteData.themeConfig.nav || [];
-  const hasSidebar =
-    siteData.themeConfig.sidebar !== undefined && pageType === 'doc';
 
   return (
     <header fixed="~" pos="t-0 l-0" w="full" z='10'>
@@ -40,7 +38,7 @@ export function Nav() {
           {/* 普通菜单 */}
           <div flex="~">
             {nav.map((item) => (
-              <MenuItem {...item} key={item.text} />
+              <MenuItem item={item} key={item.text} />
             ))}
           </div>
 

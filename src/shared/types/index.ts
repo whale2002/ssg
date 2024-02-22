@@ -1,6 +1,10 @@
 import { UserConfig as ViteConfiguration } from 'vite'
 import { ComponentType } from 'react'
 
+export type PropsWithIsland = {
+  __island?: boolean
+}
+
 export type NavItemWithLink = {
   text: string
   link: string
