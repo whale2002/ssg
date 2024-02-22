@@ -8,6 +8,11 @@ export const data = {
   islandToPathMap: {}
 }
 
+export const clearIslandData = () => {
+  data.islandProps = []
+  data.islandToPathMap = []
+}
+
 const internalJsx = (jsx, type, props, ...args) => {
   // 如果发现有 __island 这个 prop，则视为一个 Island 组件，记录下来
   if (props && props.__island) {
