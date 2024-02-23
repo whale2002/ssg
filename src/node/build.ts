@@ -14,6 +14,7 @@ import { SiteConfig } from 'shared/types'
 import { createVitePlugins } from './vitePlugins'
 import { Route } from './plugin-routes'
 import { RenderRusult } from 'runtime/ssr-entry'
+import { HelmetData } from 'react-helmet-async'
 
 const CLIENT_OUTPUT = 'build'
 
@@ -80,7 +81,7 @@ export async function bundle(root: string, config: SiteConfig) {
 }
 
 export async function renderPage(
-  render: (routePath: string) => Promise<RenderRusult>,
+  render: (routePath: string, helmetContext: object) => Promise<RenderRusult>,
   routes: Route[],
   root: string,
   clientBundle: RollupOutput
@@ -91,13 +92,23 @@ export async function renderPage(
   )
 
   return Promise.all(
-    routes.map(async (route) => {
+    [
+      ...routes,
+      {
+        path: '/404'
+      }
+    ].map(async (route) => {
       const routePath = route.path
+      const helmetContext = {
+        context: {}
+      } as HelmetData
       const {
         appHtml,
         islandProps = [],
         islandToPathMap
-      } = await render(routePath)
+      } = await render(routePath, helmetContext.context)
+
+      const { helmet } = helmetContext.context
 
       const styleAssets = clientBundle.output.filter(
         (chunk) => chunk.type === 'asset' && chunk.fileName.endsWith('.css')
@@ -111,7 +122,10 @@ export async function renderPage(
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width,initial-scale=1">
-            <title>title</title>
+            ${helmet?.title?.toString() || ''}
+            ${helmet?.meta?.toString() || ''}
+            ${helmet?.link?.toString() || ''}
+            ${helmet?.style?.toString() || ''}
             <meta name="description" content="xxx">
             ${styleAssets
               .map((item) => `<link rel="stylesheet" href="/${item.fileName}">`)
@@ -152,7 +166,7 @@ async function buildIslands(
     ${Object.entries(islandPathToMap)
       .map(
         ([islandName, islandPath]) =>
-          `import { ${islandName} } from '${islandPath}'`
+          `import { ${islandName} } from '${islandPath}';`
       )
       .join('')}
       window.ISLANDS = { ${Object.keys(islandPathToMap).join(', ')} };

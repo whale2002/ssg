@@ -1,5 +1,6 @@
 import styles from "./index.module.less";
 import { toggle } from "../../logic/toggleAppearance";
+import { PropsWithIsland } from "shared/types";
 
 interface SwitchProps {
   onClick?: () => void;
@@ -24,7 +25,7 @@ export function Switch(props: SwitchProps) {
   );
 }
 
-export function SwitchAppearance() {
+export function SwitchAppearance(props: PropsWithIsland) {
   return (
     <Switch onClick={toggle}>
       <div className={styles.sun}>

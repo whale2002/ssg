@@ -5,11 +5,13 @@ import "../style/doc.css";
 import { Nav } from '../components/Nav'
 import { HomeLayout } from './HomeLayout';
 import { DocLayout } from './DocLayout'
+import { NotFoundLayout } from './NotFoundLayout';
 import { usePageData } from '../../runtime';
+import { Helmet } from 'react-helmet-async';
 
 export function Layout() {
   const pageData = usePageData()
-  const { pageType } = pageData
+  const { pageType, title } = pageData
 
   const getContent = () => {
     switch (pageType) {
@@ -18,12 +20,15 @@ export function Layout() {
       case 'doc':
         return <DocLayout />
       default:
-        return <div>404</div>
+        return <NotFoundLayout></NotFoundLayout>
     }
   }
 
   return (
     <div>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <Nav />
       <section
         style={{

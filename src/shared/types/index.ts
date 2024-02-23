@@ -63,6 +63,7 @@ export interface Header {
 export type PageType = 'home' | 'doc' | 'custom' | '404'
 
 export interface PageData {
+  title?: string
   pageType: PageType
   siteData: UserConfig
   pagePath: string
@@ -74,6 +75,7 @@ export interface PageModule {
   default: ComponentType
   frontmatter?: FrontMatter
   toc?: Header[]
+  title?: string
   [key: string]: unknown
 }
 
