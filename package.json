@@ -1,8 +1,10 @@
 {
-  "name": "react-ssg",
-  "version": "0.0.1",
-  "description": "ssg framework",
-  "main": "index.js",
+  "name": "@whale2002/island",
+  "version": "1.0.0",
+  "description": "ssg framework based on vite and island arch",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "bin": {
     "island": "bin/island.js"
   },
@@ -11,8 +13,21 @@
     "build": "tsup && pnpm build:deps",
     "build:deps": "tsx ./scripts/prebundle.ts"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "ssg",
+    "vite",
+    "island",
+    "react"
+  ],
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "src/runtime",
+    "src/theme-default",
+    "src/shared"
+  ],
+  "author": "whale2002",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.23.9",
