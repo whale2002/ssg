@@ -19,3 +19,10 @@ export const SERVER_ENTRY_PATH = join(
 )
 
 export const MASK_SPLITTER = '!!ISLAND!!'
+
+export const EXTERNALS = [
+  'react',
+  'react-dom',
+  'react-dom/client',
+  'react/jsx-runtime'
+]

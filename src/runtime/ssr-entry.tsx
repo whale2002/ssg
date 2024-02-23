@@ -3,11 +3,16 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server';
 import { DataContext } from './hooks';
 
-export async function render(pagePath: string) {
+export interface RenderRusult {
+  appHtml: string
+  islandProps: unknown[]
+  islandToPathMap: Record<string, string>
+}
+
+export async function render(pagePath: string): Promise<RenderRusult> {
   const pageData = await initPageData(pagePath)
 
   const { clearIslandData, data } = await import('./jsx-runtime');
-  const { islandProps, islandToPathMap } = data;
   clearIslandData()
 
   const appHtml = renderToString(
@@ -17,6 +22,7 @@ export async function render(pagePath: string) {
       </StaticRouter>
     </DataContext.Provider>
   )
+  const { islandProps, islandToPathMap } = data;
 
   return {
     appHtml,

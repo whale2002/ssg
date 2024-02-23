@@ -1,6 +1,13 @@
 import { UserConfig as ViteConfiguration } from 'vite'
 import { ComponentType } from 'react'
 
+declare global {
+  interface Window {
+    ISLANDS: Record<string, ComponentType<unknown>>
+    ISLAND_PROPS: unknown[]
+  }
+}
+
 export type PropsWithIsland = {
   __island?: boolean
 }
